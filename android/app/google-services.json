@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "121819720928",
+    "project_id": "app-caballeros-de-la-virgen",
+    "storage_bucket": "app-caballeros-de-la-virgen.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:121819720928:android:016511126b1ef32bbbf485",
+        "android_client_info": {
+          "package_name": "com.caballerosapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "121819720928-tuma6liclsgevsspgi146toqq7s9nvj5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOWjM7q1h1-uavLZLMzNFNWQB6i9ekkg8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "121819720928-tuma6liclsgevsspgi146toqq7s9nvj5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
