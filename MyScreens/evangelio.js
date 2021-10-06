@@ -1,25 +1,23 @@
 import React, {useEffect, useState} from 'react'
+import { Dimensions } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import {
-    StyleSheet,
     Text,
     View,
-    TouchableOpacity,
     Image,
-    Alert,
     ScrollView,
-    FlatList,
-    Button,
     SafeAreaView,
-    StatusBar,
     Share
   } from 'react-native'
 
 import { parse } from 'fast-xml-parser'
 import commonFontStyle from '../styles/fonts/fontStyleProvider'
 import Icon from 'react-native-vector-icons/FontAwesome5'
-import { hideNavigationBar } from 'react-native-navigation-bar-color'
 const bg = require('../src/evangelio_section.png')
+
+
+const windowWidth = Dimensions.get('window').width
+
 export default function Evangelio(props) {
     const navigation = useNavigation()
 
@@ -83,12 +81,12 @@ export default function Evangelio(props) {
             <Image source={bg} style={{ minWidth: '100%', width: '100%' }} />
             </View>
 
-                <View style={{ ...styles.container, paddingBottom: 58, borderTopStartRadius:20, borderTopEndRadius: 20, marginTop:-20, zIndex: 1}}>
-                    <View style={{ flexDirection: 'row', zIndex: 1, paddingVertical: 24 }}>
+                <View style={{ ...styles.container, paddingBottom: 58, borderTopStartRadius:20, borderTopEndRadius: 20, marginTop: -20, zIndex: 1}}>
+                    <View style={{ flexDirection: 'row', zIndex: 1 }}>
                         <Icon.Button
                             name="chevron-left"
                             size={30}
-                            iconStyle={{ marginLeft: 10, marginRight: 0, marginTop: 19 }}
+                            iconStyle={{ marginLeft: windowWidth * 0.03 , marginRight: 0, marginTop: 19 }}
                             backgroundColor="transparent"
                             onPress={() => navigation.navigate('Home')}
                         />
@@ -99,7 +97,7 @@ export default function Evangelio(props) {
                         <Icon.Button
                             name="share-alt"
                             size={20}
-                            iconStyle={{ top: 25, left:15 }}
+                            iconStyle={{ marginLeft: windowWidth * 0.23, marginRight: 0, marginTop: 19 }}
                             borderRadius={1}
                             backgroundColor="transparent"
                             color="#FEFFFE"

@@ -1,25 +1,16 @@
 import React, { Component } from 'react'
 
 import {
-    StyleSheet,
     Text,
     View,
-    TouchableOpacity,
     Image,
-    Alert,
     ScrollView,
-    FlatList,
-    Button,
-    SafeAreaView,
-    StatusBar
   } from 'react-native'
 
-  import { hideNavigationBar } from 'react-native-navigation-bar-color'
   import commonFontStyle from '../styles/fonts/fontStyleProvider'
   import Icon from 'react-native-vector-icons/FontAwesome5'
   import BottomNav from '../MyComponents/bottomNav'
-  import { Linking } from 'react-native';
-  import ExternalLink from '../MyComponents/ExternalLink'
+  import { Linking } from 'react-native'
   
   var notFour = require('../src/notfour.png')
   const broadOne = require('../src/broad-1.png')
@@ -65,23 +56,6 @@ import {
                                   style={styles.broadImage}
                               />
                               <Text style={styles.cardText}> Misa de 7:30am</Text>
-                              <View style={{ flexDirection: "row" }}>
-                                  <View style={{ padding: 0, bottom: 10 }}>
-                                  <Icon name="instagram" size={25} color="#900"
-                                      onPress={() => Linking.openURL('https://www.instagram.com/caballeros_de_la_virgen/')}/>
-                                  </View>
-                                  <View style={{ marginLeft: 20, padding: 0, bottom: 10 }}>
-                                  <Icon name="youtube" size={25} color="#900" 
-                                    onPress={() => Linking.openURL('https://www.youtube.com/channel/UCIkQQaQaiFagKTwNs4SgQOg')} />
-                                  </View>
-                              </View>
-                          </View>
-                          <View style={{ ...styles.cardContainer, marginLeft: 0 }}>
-                              <Image
-                                  source={broadTree}
-                                  style={styles.broadImage}
-                              />
-                              <Text style={styles.cardText}> Misa de 10:00am</Text>
                               <View style={{ flexDirection: "row" }}>
                                   <View style={{ padding: 0, bottom: 10 }}>
                                   <Icon name="instagram" size={25} color="#900"
@@ -283,6 +257,7 @@ import {
                               </View>
                           </View>
                       </ScrollView>
+                      <View style={{ paddingBottom: 50}}/>
                   </ScrollView>
                   <BottomNav screen={'broadcast'} />
               </View>

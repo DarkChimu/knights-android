@@ -1,7 +1,8 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { hideNavigationBar } from 'react-native-navigation-bar-color'
+import { Dimensions } from 'react-native'
 import { Badge } from 'react-native-elements'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
 
 import {
   StyleSheet,
@@ -16,10 +17,9 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import NotificationButton from '../MyComponents/Notify'
 import BottomNav from '../MyComponents/bottomNav'
-import { Linking } from 'react-native'
 import ExternalLink from '../MyComponents/ExternalLink'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { TextInput } from 'react-native-paper';
+import { TextInput } from 'react-native-paper'
 import { Alert } from 'react-native'
 import axios from 'axios'
 
@@ -42,20 +42,24 @@ var iglesia = require('../src/iglesia_fatima.png')
 var oracionSeven = require('../src/angelus_seven.png')
 var oracionEight = require('../src/noche_eight.png')
 
+
+const windowWidth = Dimensions.get('window').width
+const windowHeight = Dimensions.get('window').height
+
 export default function HomeScreen(props) {
   const [userName, setUserName] = React.useState('')
   const [userEmail, setUserEmail] = React.useState('')
   const navigation = useNavigation()
 
-  const [count, setCount] = useState(true)
+  const [count, setCount] = useState(0)
   
   useEffect(() => {
     const getData = async () => {
       let notifyCount = 0
       try {
         const fetchData = await AsyncStorage.getItem('Notification')
-        const dataJSON = fetchData != null ? await JSON.parse(fetchData) : null
-        dataJSON.notifications.map((el, index) => {
+        const dataJSON = fetchData != null || undefined ? await JSON.parse(fetchData) : {}
+        await dataJSON.notifications.map((el, index) => {
           if (el.seen === 0) {
             notifyCount++
           }
@@ -107,10 +111,10 @@ export default function HomeScreen(props) {
     <View style={styles.container}>
       <ScrollView>
         <View style={{ marginTop: 40 }} />
-        <Badge value={count >= 9 ? '9+' : `${count}`} status="error" containerStyle={{ zIndex: 4, position: 'absolute', top: '2%', right: '6%' }}
+        <Badge value={count >= 9 ? '9+' : `${count}`} status="error" containerStyle={{ zIndex: 4, position: 'absolute', top: (windowHeight * 0.09) , right: (windowWidth * 0.06) }}
         />
         <NotificationButton
-          style={{ zIndex: 3, height: 50, width: 50 }}
+          style={{ zIndex: 3, height: verticalScale(50), width: scale(50) }}
           onPress={() => navigation.navigate('Notifications')}
         />
 
@@ -122,9 +126,9 @@ export default function HomeScreen(props) {
         </TouchableOpacity> */}
 
 
-<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', height: verticalScale(80) }}>
           <Image source={logo}
-            style={{ height: 80, width: 200, margin: 20 }} />
+            style={{ height: '120%', width: scale(200), margin: verticalScale(20) }} />
         </View>
 
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -139,18 +143,20 @@ export default function HomeScreen(props) {
 
         <View style={styles.cardContainertwo}>
           <Image source={rosarioHeader}
-            style={{ height: 210, width: '100%', borderRadius: 20 }} />
-          <Pressable style={{ width: '100%', top: '-1%', alignItems: 'flex-end', flexDirection: 'row' }} onPress={() => navigation.navigate('Rosario')}>
+            style={{ height: verticalScale(210), width: '100%', borderRadius: 20 }} />
+          <Pressable style={{ width: '100%', top: ((windowHeight * 0.01) * -1), alignItems: 'flex-end', flexDirection: 'row' }} onPress={() => navigation.navigate('Rosario')}>
             <Text style={styles.TitleText}> Santo Rosario </Text>
-            <Icon style={{ color: 'red', right: '50%', top: '-2%' }} size={20} name="chevron-right" />
+            <Icon style={{ color: 'red', right: '50%', top: ((windowHeight * 0.01) * -1) }} size={20} name="chevron-right" />
           </Pressable>
           <Text style={styles.CardText}>La oración más poderosa ante Dios es la que hacemos a través de su Santísima Madre,particularmente el Rosario, en él oramos como nos enseñó y contemplamos la vida de Jesús.</Text>
         </View>
 
-        <ExternalLink link="https://caballerosdelavirgen.org/intencion/" style={{ }}>
-          <Image source={intencion}
-            style={{ height: 160, width: '90%', borderRadius: 20 , marginStart:20}}
-          />
+        <ExternalLink link="https://caballerosdelavirgen.org/intencion/">
+          <View style={styles.cardContainertwo}>
+            <Image source={intencion}
+              style={{ height: 140, width: '100%', borderRadius: 20 }}
+            />
+          </View>
         </ExternalLink>
 
 
@@ -164,70 +170,67 @@ export default function HomeScreen(props) {
 
 
           <ExternalLink link="https://caballerosdelavirgen.org/oraciones-y-devociones/oracion-de-la-manana/">
-            <View style={{ height: 150, width: 170, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{...styles.externalView }}>
               <Image source={oracionOne}
-                style={{ height: 85, width: 85, borderRadius: 20, margin: 10 }} />
-
-
-              <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} />
-              <Text style={styles.iconsText}>Oración de la mañana</Text>
+                style={styles.oracionImage} />
+                <Text style={styles.iconsText}>Oración de la mañana</Text>
             </View>
           </ExternalLink>
 
 
           <ExternalLink link="https://caballerosdelavirgen.org/oraciones-y-devociones/oracion-a-jesus-sacramentado/">
-            <View style={{ height: 150, width: 170, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={styles.externalView}>
               <Image source={oracionTwo}
-                style={{ height: 85, width: 85, borderRadius: 20, margin: 10 }} />
+                style={styles.oracionImage} />
               <Text style={styles.iconsText}> Oración a Jesús Sacramentado </Text>
             </View>
           </ExternalLink>
 
           <ExternalLink link="https://caballerosdelavirgen.org/destaque/coronilla-a-san-miguel-arcangel/">
-            <View style={{ height: 150, width: 180, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={styles.externalView}>
               <Image source={oracionFour}
-                style={{ height: 85, width: 85, borderRadius: 20, margin: 10 }} />
+                style={styles.oracionImage} />
               <Text style={styles.iconsText}> Coronilla a San Miguel Arcángel</Text>
             </View>
           </ExternalLink>
 
 
           <ExternalLink link="https://caballerosdelavirgen.org/destaque/novena-a-nuestra-senora-de-fatima/">
-            <View style={{ height: 150, width: 180, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={styles.externalView}>
               <Image source={oracionFive}
-                style={{ height: 85, width: 85, borderRadius: 20, margin: 10 }} />
+                style={styles.oracionImage} />
               <Text style={styles.iconsText}> Novena a Nuestra Señora de Fátima </Text>
             </View>
           </ExternalLink>
 
           <ExternalLink link="https://caballerosdelavirgen.org/oraciones-y-devociones/consagracion-al-espiritu-santo/">
-            <View style={{ height: 150, width: 180, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={styles.externalView}>
               <Image source={oracionSix}
-                style={{ height: 85, width: 85, borderRadius: 20, margin: 10 }} />
+                style={styles.oracionImage} />
               <Text style={styles.iconsText}> Consagración al Espíritu Santo </Text>
             </View>
           </ExternalLink>
 
           <ExternalLink link="https://caballerosdelavirgen.org/oraciones-y-devociones/angelus/">
-            <View style={{ height: 150, width: 150, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={styles.externalView}>
               <Image source={oracionSeven}
-                style={{ height: 85, width: 85, borderRadius: 20, margin: 10 }} />
-              <Text style={styles.iconsText}> El             Ángelus </Text>
+                style={styles.oracionImage} />
+              <Text style={styles.iconsText}> El Ángelus </Text>
             </View>
           </ExternalLink>
 
           <ExternalLink link="https://caballerosdelavirgen.org/oraciones-y-devociones/confianza-en-maria/">
-            <View style={{ height: 150, width: 160, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={styles.externalView}>
               <Image source={oracionEight}
-                style={{ height: 85, width: 85, borderRadius: 20, margin: 10 }} />
+                style={styles.oracionImage} />
               <Text style={styles.iconsText}> Oración de la noche </Text>
             </View>
           </ExternalLink>
 
           <ExternalLink link="https://caballerosdelavirgen.org/oraciones-y-devociones/">
-            <View style={{ height: 150, width: 180, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{...styles.externalView}}>
               <Image source={oracionthree}
-                style={{ height: 85, width: 85, borderRadius: 20, margin: 10 }} />
+                style={styles.oracionImage} />
               <Text style={styles.iconsText}> Oraciones a Maria Santísima </Text>
             </View>
           </ExternalLink>
@@ -237,7 +240,7 @@ export default function HomeScreen(props) {
 
         <View style={styles.cardContainer}>
           <Image source={evangelioCard}
-            style={{ height: 170, width: '100%', borderRadius: 20 }} />
+            style={{ height: verticalScale(190), width: '100%', borderRadius: 20 }} />
           <Pressable style={{ width: '100%', top: '-1%', alignItems: 'flex-end', flexDirection: 'row' }} onPress={() => navigation.navigate('Evangelio')}>
             <Text style={styles.TitleText}> Evangelio del día </Text>
             <Icon style={{ color: 'red', right: '50%', top: '-2%' }} size={20} name="chevron-right" />
@@ -246,7 +249,7 @@ export default function HomeScreen(props) {
 
         <View style={styles.cardContainer}>
           <Image source={santosCard}
-            style={{ height: 190, width: '100%', borderRadius: 20 }} />
+            style={{ height: verticalScale(190), width: '100%', borderRadius: 20 }} />
           <Pressable style={{ width: '100%', top: '-1%', alignItems: 'flex-end', flexDirection: 'row' }} onPress={() => navigation.navigate('Santo')}>
             <Text style={styles.TitleText}> Santo del día </Text>
             <Icon style={{ color: 'red', right: '50%', top: '-2%' }} size={20} name="chevron-right" />
@@ -260,10 +263,10 @@ export default function HomeScreen(props) {
 
         <View style={styles.cardContainer}>
           <Image source={iglesia}
-            style={{ height: 150, width: '100%', borderRadius: 20 }} />
-          <Pressable style={{ width: '100%', top: '-1%', alignItems: 'flex-end', flexDirection: 'row' }} onPress={() => navigation.navigate('Iglesia')}>
-            <Text style={styles.TitleText}> Iglesia Nuestra Señora de Fátima </Text>
-            <Icon style={{ color: 'red', right: '30%', top: '-2%' }} size={20} name="chevron-right" />
+            style={styles.pageImage} />
+          <Pressable style={{ width: '100%', top: ((windowHeight * 0.01) * -1), alignItems: 'flex-end', flexDirection: 'row' }} onPress={() => navigation.navigate('Iglesia')}>
+            <Text style={{...styles.TitleText, textAlign: 'left'}}> Iglesia Nuestra Señora {'\n'} de Fátima </Text>
+            <Icon style={{ color: 'red', right: (windowWidth * 0.03), top: ((windowHeight * 0.045) * -1) }} size={20} name="chevron-right" />
           </Pressable>
           <Text style={styles.CardText}>Conoce la ubicación de nuestra iglesia y los horarios de las misas que tenemos disponibles.</Text>
         </View>
@@ -271,10 +274,10 @@ export default function HomeScreen(props) {
         
         <View style={styles.cardContainer}>
           <Image source={radioCard}
-            style={{ height: 110, width: '100%', borderRadius: 20 }} />
-          <Pressable style={{ width: '100%', top: '-1%', alignItems: 'flex-end', flexDirection: 'row' }} onPress={() => navigation.navigate('Radio')}>
+            style={{ height: verticalScale(95), width: '100%', borderRadius: 20 }} />
+          <Pressable style={{ width: '100%', top: ((windowHeight * 0.01) * -1), alignItems: 'flex-end', flexDirection: 'row' }} onPress={() => navigation.navigate('Radio')}>
             <Text style={styles.TitleText}> Radio Caballeros </Text>
-            <Icon style={{ color: 'red', right: '50%', top: '-2%' }} size={20} name="chevron-right" />
+            <Icon style={{ color: 'red', right: '50%', top: ((windowHeight * 0.01) * -1) }} size={20} name="chevron-right" />
           </Pressable>
         </View>
         
@@ -284,16 +287,12 @@ export default function HomeScreen(props) {
 
         <ExternalLink link="https://caballerosdelavirgen.org/">
           <Image source={art}
-            style={{ height: 167, width: '90%', borderRadius: 20 , marginStart:20}}
+            style={{ height: scale(150), width: '90%', borderRadius: 20, marginLeft: 20 }}
           />
         </ExternalLink>
-        <View style={{padding:20}} />
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        {/* <Text style={styles.boldText}> Suscribete a Nuestro Newsletter </Text> */}
-        </View>
 
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={styles.boldTextwo}> Suscríbete a los  caballeros de la virgen </Text>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginBottom: 50 }}>
+          <Text style={{ ...styles.boldTextwo, textAlign: 'center' }}> Suscríbete a los {'\n'} Caballeros de la Virgen </Text>
 
           <TextInput style={{...styles.input, textAlign: 'center' }}
             underlineColorAndroid="transparent"
@@ -303,7 +302,7 @@ export default function HomeScreen(props) {
             onChangeText={word => setUserName(word)} />
 
 
-          <TextInput style={{...styles.input, marginTop: '1%', textAlign: 'center' }}
+          <TextInput style={{...styles.input, marginTop: ((windowHeight * 0.01) * -1), textAlign: 'center' }}
             underlineColorAndroid="transparent"
             placeholder=" Email "
             placeholderTextColor="#0D2A4E"
@@ -311,7 +310,7 @@ export default function HomeScreen(props) {
             onChangeText={word => setUserEmail(word)} />
 
           <TouchableOpacity
-            style={{ ...styles.submitButton, marginTop: '1%' }}
+            style={{ ...styles.submitButton, marginTop: ((windowHeight * 0.01) * -1) }}
             onPress={
               () => sendNewsletterInfo({ 
                 email: userEmail.trim().toLowerCase(), 
@@ -322,7 +321,6 @@ export default function HomeScreen(props) {
             </TouchableOpacity>
 
         </View>
-        <View style={{ padding: 120 }} />
       </ScrollView>
       <BottomNav screen={'home'} />
 
@@ -344,8 +342,8 @@ const styles = StyleSheet.create({
   },
   input: {
     margin: 15,
-    height:30,
-    width:'60%',
+    height: verticalScale(30),
+    width: scale(windowWidth * 0.60),
     borderColor: '#0D2A4E',
     borderWidth: 1,
     borderRadius:20,
@@ -354,11 +352,11 @@ const styles = StyleSheet.create({
     color:'orange'
  },
  submitButton: {
-  width:'60%',
+  width: scale(windowWidth * 0.60),
   backgroundColor: '#0D2A4E',
   padding: 10,
   margin: 15,
-  height: 40,
+  height: verticalScale(40),
   borderRadius: 20
 },
 submitButtonText:{
@@ -368,7 +366,7 @@ submitButtonText:{
   card: {
     shadowColor: '#00000021',
     shadowOffset: {
-      width: 2
+      width: scale(2)
     },
     shadowOpacity: 0.5,
     shadowRadius: 4,
@@ -472,8 +470,6 @@ submitButtonText:{
   iconsText: {
     textAlignVertical: 'center',
     textAlign: 'center',
-    marginBottom: 15,
-    marginRight: 10,
     paddingLeft: 25,
     paddingRight: 25,
     fontSize: 14,
@@ -546,12 +542,12 @@ submitButtonText:{
     marginTop: 5
   },
   icon: {
-    width: 25,
-    height: 25
+    width: scale(25),
+    height: verticalScale(25)
   },
   iconData: {
-    width: 15,
-    height: 15,
+    width: scale(15),
+    height: verticalScale(15),
     marginTop: 5,
     marginRight: 5
   },
@@ -579,5 +575,23 @@ submitButtonText:{
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  externalView: {
+    height: verticalScale(150), 
+    width: scale(170), 
+    flex: 1, 
+    alignItems: 'center', 
+    justifyContent: 'center'
+  },
+  oracionImage: {
+    height: 85, 
+    width: 85, 
+    borderRadius: 20, 
+    marginBottom: 10
+  },
+  pageImage: {
+    height: verticalScale(190), 
+    width: '100%', 
+    borderRadius: 20
   }
 })

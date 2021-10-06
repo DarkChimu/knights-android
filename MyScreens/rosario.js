@@ -1,6 +1,8 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+
 import { useNavigation } from '@react-navigation/native'
 import {
+    Dimensions,
     Text,
     View,
     TouchableOpacity,
@@ -10,11 +12,19 @@ import {
     Share
   } from 'react-native'
 
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+
 import moment from 'moment'
+import 'moment/locale/es'
 import RosarioAccordion from '../MyComponents/RosarioAccordion'
 import commonFontStyle from '../styles/fonts/fontStyleProvider'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 const bg = require('../src/rosario_header.png')
+
+moment.locale('es')
+
+const windowWidth = Dimensions.get('window').width
+const windowHeight = Dimensions.get('window').height
 
 export default function Rosario(props) {
     const navigation = useNavigation()
@@ -39,7 +49,7 @@ export default function Rosario(props) {
               // shared
             }
           } else if (result.action === Share.dismissedAction) {
-            // dismissed
+            // dismissedq
           }
         } catch (error) {
           console.log(error.message)
@@ -52,35 +62,36 @@ export default function Rosario(props) {
                     <View style={{ zIndex: 1, marginTop: 24 }}>
                         <Image source={bg} style={{ minWidth: '100%', width: '100%' }} />
                     </View>
-                    <View style={{ zIndex: 2, position: 'absolute', top: 35, left: 10 }} >
+                    <View style={{ zIndex: 2, position: 'absolute', top: verticalScale(60), left: scale(15) }} >
                         <Icon
                             name="chevron-left"
                             size={25}
                             borderRadius={50}
                             backgroundColor="transparent"
-                            color="#0D2A4E"
+                            color="white"
                             onPress={() => navigation.navigate('Home')}
                         />
                     </View>
-                    <View style={{ ...styles.cardContainer, position: 'absolute' ,marginVertical: 0, paddingBottom: 2, alignItems: 'flex-end', height: 65 ,top: 230, width: '100%', marginTop:50 }} >
+                        <Text style={{ ...commonFontStyle.titleText, color: 'white', zIndex: 2, position: 'absolute', top: verticalScale(45), left: scale(15) }}>Volver</Text>
+                    <View style={{ ...styles.cardContainer, position: 'absolute' , paddingBottom: 2, alignItems: 'flex-end', height: verticalScale(65) ,top: verticalScale(230), width: '100%', marginTop:50 }} >
                         <Icon
                             name="share-alt" size={16}
                             onPress={onShare}
                         />
                     </View>
                     <View>
-                        <Text style={{ ...styles.boldText, zIndex: 3, marginVertical: 0, paddingVertical: 0, marginLeft: 15, top: '-110%', width: 200}}>
+                        <Text style={{ ...styles.boldText, zIndex: 3, marginVertical: 0, paddingVertical: 0, marginLeft: 15, top: (((windowHeight * 0.07) * -1)), width: windowWidth}}>
                             Santo Rosario 
                         </Text>
                     </View>
-                    <View style={{ paddingVertical: 0, marginTop: '-5%', marginLeft: 5 }}>
-                        <Text style={{ ...styles.normalText, paddingVertical: 0, marginVertical: 0 }}>
+                    <View style={{ paddingVertical: 0, marginTop: ((windowHeight * 0.05) * -1), marginLeft: 15 }}>
+                        <Text style={{ ...styles.titleText, paddingVertical: 0, textAlign: 'center', marginVertical: 0, fontSize: 16}}>
                             {(moment().format('LLLL').toUpperCase())}
                         </Text>
                     </View>
                     <View>
-                        <Text style={{ ...styles.normalText, paddingVertical: 0, marginVertical: 0, textAlign: 'justify', fontSize: 14 }}>
-                            La oración más poderosa ante Dios es la que hacemos a través de su Santísima Madre,particularmente el Rosario, en él oramos como nos enseñó y contemplamos la vida de Jesús.
+                        <Text style={{ ...styles.normalText, paddingVertical: 0, marginVertical: 0, textAlign: 'justify', fontSize: 16 }}>
+                            La oración más poderosa ante Dios es la que hacemos a través de su Santísima Madre, particularmente el Rosario, en él oramos como nos enseñó y contemplamos la vida de Jesús.
                         </Text>
                     </View>
                     <View style={{ flex: 1, flexDirection: "row", marginLeft: 20 , width:'88%'}}>
