@@ -73,7 +73,7 @@ export default function Rosario(props) {
                         />
                     </View>
                         <Text style={{ ...commonFontStyle.titleText, color: 'white', zIndex: 2, position: 'absolute', top: verticalScale(45), left: scale(15) }}>Volver</Text>
-                    <View style={{ ...styles.cardContainer, position: 'absolute' , paddingBottom: 2, alignItems: 'flex-end', height: verticalScale(65) ,top: verticalScale(230), width: '100%', marginTop:50 }} >
+                    <View style={{ ...styles.cardContainer, position: 'absolute' , paddingBottom: 2, alignItems: 'flex-end', height: verticalScale(65) ,top: verticalScale(230), width: '100%', marginTop: verticalScale(100) }} >
                         <Icon
                             name="share-alt" size={16}
                             onPress={onShare}

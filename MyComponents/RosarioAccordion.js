@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { View, Text, Image } from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, Image, Dimensions } from 'react-native'
 import { List } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import AudioPlayer from './audioplayer'
+
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
 
 
 import commonFontStyle from '../styles/fonts/fontStyleProvider'
@@ -32,6 +34,9 @@ const luminosos3 = require('../src/luminosos3.webp')
 const luminosos4 = require('../src/luminosos4.webp')
 const luminosos5 = require('../src/luminosos5.webp')
 
+const windowWidth = Dimensions.get('window').width
+const windowHeight = Dimensions.get('window').height
+
 export default function RosarioAccordion(props) {
     const [expanded, setExpanded] = useState(true)
     const handlePress = () => setExpanded(!expanded)
@@ -39,7 +44,7 @@ export default function RosarioAccordion(props) {
     switch (props.view) {
         case 'gloriosos':
             return (
-                <View style={{ marginLeft: 15, marginTop: '-15%' }}>
+                <View style={{ marginLeft: 15, marginTop: ((windowWidth * 0.15) * -1) }}>
                     <List.Section title="">
                         <List.Accordion
                             title="Ofrecimiento del Rosario"
@@ -48,7 +53,7 @@ export default function RosarioAccordion(props) {
                             onPress={handlePress}>
                             <Image source={gloriosos0} style={{ ...styles.misterios }} />
                             <AudioPlayer track={'1'} />
-                            <View style={{ marginLeft: '-1%', paddingVertical: 0, width: 350 }}>
+                            <View style={{ marginLeft: '-1%', paddingVertical: 0, width: scale(350) }}>
                                 <Text style={{ marginVertical: 10, fontWeight: 'bold', fontSize: 20 }}>
                                     Ofrecimiento del Rosario
                     </Text>
@@ -446,7 +451,7 @@ export default function RosarioAccordion(props) {
 
         case 'dolorosos':
             return (
-                <View style={{ marginLeft: 15, marginTop: '-15%' }}>
+                <View style={{ marginLeft: 15, marginTop: ((windowWidth * 0.15) * -1) }}>
                     <List.Section title="">
                         <List.Accordion
                             title="Ofrecimiento del Rosario"
@@ -455,7 +460,7 @@ export default function RosarioAccordion(props) {
                             onPress={handlePress}>
                             <Image source={dolorosos} style={{ ...styles.misterios }} />
                             <AudioPlayer track={'1'} />
-                            <View style={{ marginLeft: '-1%', paddingVertical: 0, width: 350 }}>
+                            <View style={{ marginLeft: '-1%', paddingVertical: 0, width: scale(350) }}>
                                 <Text style={{ marginVertical: 10, fontWeight: 'bold', fontSize: 20 }}>
                                     Ofrecimiento del Rosario
                     </Text>
@@ -657,7 +662,7 @@ export default function RosarioAccordion(props) {
                             onPress={handlePress}>
                             <Image source={luminosos0} style={{ ...styles.misterios }} />
                             <AudioPlayer track={'1'} />
-                            <View style={{ marginLeft: '-1%', paddingVertical: 0, width: 350 }}>
+                            <View style={{ marginLeft: '-1%', paddingVertical: 0, width: scale(350) }}>
                                 <Text style={{ marginVertical: 10, fontWeight: 'bold', fontSize: 20 }}>
                                     Ofrecimiento del Rosario
                     </Text>
@@ -857,8 +862,8 @@ export default function RosarioAccordion(props) {
 const styles = {
     ...commonFontStyle,
     misterios: {
-        width: 291,
-        height: 200,
+        width: scale(291),
+        height: verticalScale(200),
         marginLeft: '10%'
     }
 }
