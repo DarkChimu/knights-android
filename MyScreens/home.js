@@ -128,7 +128,7 @@ export default function HomeScreen(props) {
 
 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', height: verticalScale(80) }}>
           <Image source={logo}
-            style={{ height: '120%', width: scale(200), margin: verticalScale(20) }} />
+            style={{ height: windowHeight > 1440 ? '120%' : '130%', width: windowWidth > 720 ? scale(200) : scale(250) }} />
         </View>
 
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -154,7 +154,7 @@ export default function HomeScreen(props) {
         <ExternalLink link="https://caballerosdelavirgen.org/intencion/">
           <View style={styles.cardContainertwo}>
             <Image source={intencion}
-              style={{ height: 140, width: '100%', borderRadius: 20 }}
+              style={{ height: verticalScale(140), width: scale(318), borderRadius: 20 }}
             />
           </View>
         </ExternalLink>

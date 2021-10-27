@@ -12,6 +12,5 @@ module.exports = async function () {
 
     TrackPlayer.addEventListener('remote-stop', () => {
         TrackPlayer.stop()
-        TrackPlayer.destroy()
     })
 }

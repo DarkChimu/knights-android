@@ -11,9 +11,8 @@ const tracks = [
     {
         id: '1',
         url:
-            'https://caballerosdelavirgen.org/wp-content/uploads/2019/04/Oraciones-iniciales-y-Credo.mp3',
-        type: 'default',
-        title: 'Oraciones Iniciales y Credo',
+            'https://www.mboxdrive.com/Misterios%20Gloriosos%20del%20Rosario%20Mi%C3%A9rcoles%20y%20Domingo.mp3',
+        title: 'Misterios Gloriosos',
         album: 'Caballeros de la Virgen',
         artist: 'Caballeros',
         artwork: 'https://i1.wp.com/caballerosdelavirgen.org/wp-content/uploads/2020/06/dolorosos-1.png'
@@ -21,27 +20,27 @@ const tracks = [
     {
         id: '2',
         url:
-            'https://caballerosdelavirgen.org/wp-content/uploads/2019/11/Misterios-Gloriosos-La-Resurrecion-de-Jesus.mp3?_=10',
-        title: 'Santo Rosario',
-        album: 'Primer Miestrio Glorioso',
-        artist: 'Caballeros de la Virgen',
+            'https://www.mboxdrive.com/Misterios%20Luminosos%20del%20Rosario%20Jueves.mp3',
+        title: 'Misterios Luminosos',
+        album: 'Caballeros de la Virgen',
+        artist: 'Caballeros',
         artwork: 'https://i1.wp.com/caballerosdelavirgen.org/wp-content/uploads/2020/06/dolorosos-1.png'
     },
     {
         id: '3',
         url:
-            'https://caballerosdelavirgen.org/wp-content/uploads/2019/11/Misterios-Gloriosos-La-venida-del-Espiritu-santo-sobre-Nuestra-Senora-y-los-Apostoles.mp3?_=12',
-        title: 'Santo Rosario',
-        album: 'Tercer Misterio Glorioso',
-        artist: 'Caballeros de la virgen',
+            'https://www.mboxdrive.com/Misterios%20Dolorosos%20del%20Rosario%20Martes%20y%20Viernes.mp3',
+        title: 'Misterios Dolorosos',
+        album: 'Caballeros de la Virgen',
+        artist: 'Caballeros',
         artwork: 'https://i1.wp.com/caballerosdelavirgen.org/wp-content/uploads/2020/06/dolorosos-1.png'
     },
     {
         id: '4',
-        url:   'https://caballerosdelavirgen.org/wp-content/uploads/2019/11/Misterios-Gloriosos-Asuncion-de-Maria-a-los-cielos.mp3?_=13',
-        title: 'Santo Rosario',
-        album: 'Cuarto Misterio Glorioso',
-        artist: 'Caballeros de la virgen',
+        url:   'https://www.mboxdrive.com/Misterios%20Gozosos%20del%20Rosario%20Lunes%20y%20S%C3%A1bado.mp3',
+        title: 'Misterios Gozosos',
+        album: 'Caballeros de la Virgen',
+        artist: 'Caballeros',
         artwork: 'https://i1.wp.com/caballerosdelavirgen.org/wp-content/uploads/2020/06/dolorosos-1.png'
     },
     {

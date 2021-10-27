@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import tracks from '../helpers/tracksProvider'
-import TrackPlayer from 'react-native-track-player'
-import { useTrackPlayerProgress } from 'react-native-track-player/lib/hooks'
-import { useTrackPlayerEvents } from 'react-native-track-player/lib/hooks'
-import { TrackPlayerEvents, STATE_PLAYING } from 'react-native-track-player'
+import TrackPlayer, { Capability, State, useProgress  } from 'react-native-track-player'
 import Slider from '@react-native-community/slider'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 
@@ -17,33 +14,35 @@ const AudioPlayer = props => {
     const [isSeeking, setIsSeeking] = useState(false)
 
     const trackPlayerInit = async trackId => {
-        await TrackPlayer.setupPlayer()
-        TrackPlayer.updateOptions({
-            stopWithApp: true,
-            capabilities: [
-                TrackPlayer.CAPABILITY_PLAY,
-                TrackPlayer.CAPABILITY_PAUSE,
-                TrackPlayer.CAPABILITY_STOP
-            ],
-            compactCapabilities: [
-                TrackPlayer.CAPABILITY_PLAY,
-                TrackPlayer.CAPABILITY_PAUSE,
-                TrackPlayer.CAPABILITY_STOP
-            ]
-        })
-        const selectedTrack = await tracks.filter(element => element.id === trackId)
-        await TrackPlayer.add(selectedTrack)
-        return true
+        try {
+            TrackPlayer.updateOptions({
+                stopWithApp: true,
+                capabilities: [
+                    Capability.Play,
+                    Capability.Pause,
+                    Capability.Stop
+                ],
+                compactCapabilities: [
+                    Capability.Play,
+                    Capability.Pause,
+                    Capability.Stop 
+                ]
+            })
+    
+            await TrackPlayer.setupPlayer()
+            
+            const selectedTrack = tracks.filter(element => element.id === trackId)
+            
+            await TrackPlayer.add(selectedTrack)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
-    const { position, duration } = useTrackPlayerProgress(250)
+    const { position, duration } = useProgress()
 
     useEffect(() => {
-        const startPlayer = async () => {
-            let isInit = await trackPlayerInit(props.track)
-            setIsTrackPlayerInit(isInit)
-        }
-        startPlayer()
+        trackPlayerInit()
     }, [])
 
 
@@ -54,22 +53,15 @@ const AudioPlayer = props => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [position, duration])
 
-    useTrackPlayerEvents([TrackPlayerEvents.PLAYBACK_STATE], event => {
-        if (event.state === STATE_PLAYING) {
-            setIsPlaying(true)
-        } else {
-            setIsPlaying(false)
-        }
-    })
+    const onButtonPressed = trackId => {
 
-    const onButtonPressed = async trackId => {
-
-        if (!isPlaying) {
+        if (isPlaying === false) {
             trackPlayerInit(trackId)
-            await TrackPlayer.play()
+            TrackPlayer.play()
             setIsPlaying(true)
         } else {
-            await TrackPlayer.destroy()
+            TrackPlayer.pause()
+            TrackPlayer.stop()
             setIsPlaying(false)
         }
     }
@@ -81,8 +73,8 @@ const AudioPlayer = props => {
 
     const slidingCompleted = async value => {
         await TrackPlayer.seekTo(value * duration)
-        setSliderValue(value)
-        setIsSeeking(false)
+        await setSliderValue(value)
+        await setIsSeeking(false)
     }
 
     return (

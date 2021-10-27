@@ -6,14 +6,24 @@ import {
     Alert,
     ScrollView,
     SafeAreaView,
-    Share
+    Share,
+    Dimensions
   } from 'react-native'
+
+  import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+  import moment from 'moment'
+  import 'moment/locale/es'
 
 import { parse } from 'fast-xml-parser'
 import { useNavigation } from '@react-navigation/native'
 import commonFontStyle from '../styles/fonts/fontStyleProvider'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 const bg = require('../src/santos_header.png')
+
+moment.locale('es')
+
+const windowWidth = Dimensions.get('window').width
+const windowHeight = Dimensions.get('window').height
 
 export default function Santo(props) {
     const navigation = useNavigation()
@@ -29,6 +39,8 @@ export default function Santo(props) {
                 const responseJSON = await parse(responseText)
 
                 const { item } = responseJSON.rss.channel
+
+                console.log(item[0].title.length)
 
                 setData({
                     info: {
@@ -51,7 +63,7 @@ export default function Santo(props) {
         try {
           const result = await Share.share({
             message:
-              'React Native | A framework for building native apps using React',
+              'Compartir en:'
           })
           if (result.action === Share.sharedAction) {
             if (result.activityType) {
@@ -90,40 +102,40 @@ export default function Santo(props) {
     return (
         <SafeAreaView>
             <View style={{ paddingTop: 24 }} />
-            <ScrollView>
+            <ScrollView style={{ backgroundColor: 'white'}}>
                 <View style={{ zIndex: 1 }}>
-                    <Image source={bg} style={{ minWidth: '100%', width: '100%', height:250 }} />
+                    <Image source={bg} style={{ minWidth: '100%', width: '100%', height: verticalScale(250) }} />
                 </View>
-                <View style={{ zIndex: 2, position: 'absolute', top: 35, left: 10 }} >
+                <View style={{ zIndex: 2, position: 'absolute', top: verticalScale(45), left: scale(15) }} >
                     <Icon
                         name="chevron-left"
                         size={25}
                         borderRadius={50}
                         backgroundColor="transparent"
-                        color="#0D2A4E"
+                        color="white"
                         onPress={() => navigation.navigate('Home')}
                     />
                 </View>
-                { renderNextSanto(data.item) }
-                <View style={{ ...styles.cardContainer, position: 'absolute' ,marginVertical: 0, paddingBottom: 2, alignItems: 'flex-end', height: 65 ,top: 225, width: '100%' }} >
+                <Text style={{ ...commonFontStyle.titleText, color: 'white', zIndex: 2, position: 'absolute', top: verticalScale(30), left: scale(15) }}>Volver</Text>
+                <View style={{ ...styles.cardContainer, zIndex: 1, backgroundColor: 'white', position: 'absolute' ,marginVertical: 0, paddingBottom: 2, alignItems: 'flex-end', height: verticalScale(65) ,top: verticalScale(225), width: '100%' }} >
                     <Icon
                         name="share-alt" size={16}
                         onPress={onShare}
                     />
                 </View>
                 <View>
-                    <Text style={{ ...styles.boldText, ...styles.santoTitle, top: '-40%' }}>
+                    <Text style={{ ...styles.boldText, ...styles.santoTitle, zIndex: 10, fontSize: windowWidth <= Number('720') ? scale(16) : scale(25), top: '-40%' }}>
                         {data.info.title}
                     </Text>
                 </View>
-                <View style={{ paddingVertical: 0, marginTop: '1%', marginLeft: 5 }}>
+                <View style={{ paddingVertical: 0, marginLeft: 5, flex: 1, alignItems: 'center' }}>
                     <Text style={{ ...styles.normalText, paddingVertical: 0, marginVertical: 0, fontSize:16 }}>
-                        {data.info.pubDate}
+                        {(moment().format('LLLL').toUpperCase())}
                     </Text>
                 </View>
-                <View>
+                <View  style={{ flex: 1, alignItems: 'center'}}>
                     <Text style={{ ...styles.normalText, paddingVertical: 0, marginVertical: 0, textAlign: 'justify', fontSize: 16 }}>
-                    {data.info.description}
+                        {data.info.description}
                     </Text>
                 </View>
             </ScrollView>
@@ -147,7 +159,6 @@ const styles = {
         zIndex: 3, 
         marginVertical: 0, 
         paddingVertical: 10, 
-        marginLeft: 3, 
-        top: '-70%'
+        marginLeft: 3
     }
 }

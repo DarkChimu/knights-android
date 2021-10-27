@@ -12,7 +12,9 @@ import {
     Share
   } from 'react-native'
 
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import AudioPlayer from '../MyComponents/audioplayer'
+
+import { scale, verticalScale } from 'react-native-size-matters'
 
 import moment from 'moment'
 import 'moment/locale/es'
@@ -20,6 +22,10 @@ import RosarioAccordion from '../MyComponents/RosarioAccordion'
 import commonFontStyle from '../styles/fonts/fontStyleProvider'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 const bg = require('../src/rosario_header.png')
+const gloriosos = require('../src/gloriososThub.jpg')
+const gozosos = require('../src/gozososThub.jpg')
+const luminosos = require('../src/luminososThub.jpg')
+const dolorosos = require('../src/dolorososThub.jpg')
 
 moment.locale('es')
 
@@ -27,6 +33,7 @@ const windowWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
 
 export default function Rosario(props) {
+    console.log(windowHeight)
     const navigation = useNavigation()
 
     const [data, setData] = useState({ view: 'gloriosos' , title: 'Gloriosos'})
@@ -58,7 +65,7 @@ export default function Rosario(props) {
 
         return (
             <SafeAreaView>
-                <ScrollView>
+                <ScrollView style={{ height: '100%', width: windowWidth }}>
                     <View style={{ zIndex: 1, marginTop: 24 }}>
                         <Image source={bg} style={{ minWidth: '100%', width: '100%' }} />
                     </View>
@@ -73,7 +80,7 @@ export default function Rosario(props) {
                         />
                     </View>
                         <Text style={{ ...commonFontStyle.titleText, color: 'white', zIndex: 2, position: 'absolute', top: verticalScale(45), left: scale(15) }}>Volver</Text>
-                    <View style={{ ...styles.cardContainer, position: 'absolute' , paddingBottom: 2, alignItems: 'flex-end', height: verticalScale(65) ,top: verticalScale(230), width: '100%', marginTop: verticalScale(100) }} >
+                    <View style={{ ...styles.cardContainer, position: 'absolute' , paddingBottom: 2, alignItems: 'flex-end', height: verticalScale(65) ,top: windowHeight < Number('683') ? verticalScale(335) : verticalScale(275), width: windowWidth }} >
                         <Icon
                             name="share-alt" size={16}
                             onPress={onShare}
@@ -85,7 +92,7 @@ export default function Rosario(props) {
                         </Text>
                     </View>
                     <View style={{ paddingVertical: 0, marginTop: ((windowHeight * 0.05) * -1), marginLeft: 15 }}>
-                        <Text style={{ ...styles.titleText, paddingVertical: 0, textAlign: 'center', marginVertical: 0, fontSize: 16}}>
+                        <Text style={{ ...styles.normalText, paddingVertical: 0, textAlign: 'center', marginVertical: 0, fontSize: 16}}>
                             {(moment().format('LLLL').toUpperCase())}
                         </Text>
                     </View>
@@ -94,9 +101,9 @@ export default function Rosario(props) {
                             La oración más poderosa ante Dios es la que hacemos a través de su Santísima Madre, particularmente el Rosario, en él oramos como nos enseñó y contemplamos la vida de Jesús.
                         </Text>
                     </View>
-                    <View style={{ flex: 1, flexDirection: "row", marginLeft: 20 , width:'88%'}}>
+                    {/* <View style={{ flex: 1, flexDirection: "row", marginLeft: 20 , width:'88%'}}>
                         <ScrollView horizontal={true}>
-                        <View style={{ width: 120 }}>
+                        <View style={{ width: scale(120) }}>
                             <TouchableOpacity
                                 style={{ backgroundColor: '#3d7cc0' }}
                                 onPress={() => setData({ view: 'gloriosos', title: 'Gloriosos'})} >
@@ -117,7 +124,7 @@ export default function Rosario(props) {
                                 <Text style={{ color: 'white', fontSize: 12, paddingVertical: 10, paddingHorizontal: 1, width:250 }}>Misterios Luminosos <Icon name="cross" color="white" /></Text>
                             </TouchableOpacity>
                         </View>
-                        <View style={{ marginLeft: 5, width: 120 }}>
+                        <View style={{ marginLeft: 5, width: scale(120) }}>
                             <TouchableOpacity
                                 style={{ backgroundColor: '#3d7cc0' }}
                                 onPress={() => setData({ view: 'dolorosos', title: 'Dolorosos'})} >
@@ -125,13 +132,56 @@ export default function Rosario(props) {
                             </TouchableOpacity>
                         </View>
                         </ScrollView>
+                    </View> */}
+
+                    <View style={{ marginTop: '10%' }}>
+                     <View style={{ width: windowWidth, height: verticalScale(210) }}>
+                         <Image source={gloriosos} style={{ height: '100%', width: '100%' }} />
+                     </View>
+                            <AudioPlayer track={'1'} />
+                            <View style={{ width: scale(350) }}>
+                                <Text style={{ ...styles.normalText, marginLeft: 5 }}>
+                                    * Rezar la Salve. {'\n'}{'\n'}
+                                    * Se puede rezar las Letanías Lauretanas al final de {'\n'}   todo el Rosario.
+                                </Text>
+                            </View>
                     </View>
-                    <View>
-                        <Text style={{ ...styles.normalText, marginLeft: 5, fontSize: 20, marginBottom:'10%' }}>
-                            Misterios {data.title}
-                        </Text>
+                    <View style={{ }}>
+                     <View style={{ width: windowWidth, height: verticalScale(220) }}>
+                         <Image source={gozosos} style={{ height: '100%', width: '100%' }} />
+                     </View>
+                            <AudioPlayer track={'1'} />
+                            <View style={{ width: scale(350) }}>
+                                <Text style={{ ...styles.normalText, marginLeft: 5 }}>
+                                    * Rezar la Salve. {'\n'}{'\n'}
+                                    * Se puede rezar las Letanías Lauretanas al final de {'\n'}   todo el Rosario.
+                                </Text>
+                            </View>
                     </View>
-                    <RosarioAccordion view={data.view} />
+                    <View style={{  }}>
+                     <View style={{ width: windowWidth, height: verticalScale(220) }}>
+                         <Image source={luminosos} style={{ height: '100%', width: '100%' }} />
+                     </View>
+                            <AudioPlayer track={'2'} />
+                            <View style={{ width: scale(350) }}>
+                                <Text style={{ ...styles.normalText, marginLeft: 5 }}>
+                                    * Rezar la Salve. {'\n'}{'\n'}
+                                    * Se puede rezar las Letanías Lauretanas al final de {'\n'}   todo el Rosario.
+                                </Text>
+                            </View>
+                    </View>
+                    <View style={{ }}>
+                     <View style={{ width: windowWidth, height: verticalScale(220) }}>
+                         <Image source={dolorosos} style={{ height: '100%', width: '100%' }} />
+                     </View>
+                            <AudioPlayer track={'4'} />
+                            <View style={{ width: scale(350) }}>
+                                <Text style={{ ...styles.normalText, marginLeft: 5 }}>
+                                    * Rezar la Salve. {'\n'}{'\n'}
+                                    * Se puede rezar las Letanías Lauretanas al final de {'\n'}   todo el Rosario.
+                                </Text>
+                            </View>
+                    </View>
                 </ScrollView>
             </SafeAreaView>
         )
